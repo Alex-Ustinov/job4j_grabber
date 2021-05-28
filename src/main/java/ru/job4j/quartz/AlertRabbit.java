@@ -14,11 +14,11 @@ import static org.quartz.SimpleScheduleBuilder.*;
 
 public class AlertRabbit {
 
-
     public static void main(String[] args) throws IOException {
-        FileInputStream file = new FileInputStream("./rabbit.properties");
-        Properties properties = new Properties();
-        properties.load(file);
+        try (FileInputStream file = new FileInputStream("./rabbit.properties")) {
+            Properties properties = new Properties();
+            properties.load(file);
+        }
         try {
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             scheduler.start();
