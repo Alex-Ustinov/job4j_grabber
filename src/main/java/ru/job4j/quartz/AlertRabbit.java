@@ -18,21 +18,21 @@ public class AlertRabbit {
         try (FileInputStream file = new FileInputStream("./rabbit.properties")) {
             Properties properties = new Properties();
             properties.load(file);
-        }
-        try {
-            Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-            scheduler.start();
-            JobDetail job = newJob(Rabbit.class).build();
-            SimpleScheduleBuilder times = simpleSchedule()
-                    .withIntervalInSeconds(new Integer(properties.getProperty("rabbit.interval")))
-                    .repeatForever();
-            Trigger trigger = newTrigger()
-                    .startNow()
-                    .withSchedule(times)
-                    .build();
-            scheduler.scheduleJob(job, trigger);
-        } catch (SchedulerException se) {
-            se.printStackTrace();
+            try {
+                Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+                scheduler.start();
+                JobDetail job = newJob(Rabbit.class).build();
+                SimpleScheduleBuilder times = simpleSchedule()
+                        .withIntervalInSeconds(new Integer(properties.getProperty("rabbit.interval")))
+                        .repeatForever();
+                Trigger trigger = newTrigger()
+                        .startNow()
+                        .withSchedule(times)
+                        .build();
+                scheduler.scheduleJob(job, trigger);
+            } catch (SchedulerException se) {
+                se.printStackTrace();
+            }
         }
     }
 
