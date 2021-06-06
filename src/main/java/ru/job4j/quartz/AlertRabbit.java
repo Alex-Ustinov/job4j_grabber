@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -26,16 +28,18 @@ public class AlertRabbit {
         return DriverManager.getConnection(url, login, password);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         Properties properties = new Properties();
-        try (FileInputStream file = new FileInputStream("./rabbit.properties")) {
+        try (FileInputStream file = new FileInputStream("./rabbit.properties");
+                     Connection connection = getConnection()
+        ) {
             properties.load(file);
             try {
                 List<Long> store = new ArrayList<>();
                 Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
                 scheduler.start();
                 JobDataMap data = new JobDataMap();
-                data.put("store", store);
+                data.put("store", connection);
                 JobDetail job = newJob(Rabbit.class)
                         .usingJobData(data)
                         .build();
@@ -47,14 +51,18 @@ public class AlertRabbit {
                         .withSchedule(times)
                         .build();
                 scheduler.scheduleJob(job, trigger);
-                Thread.sleep(5000);
+                String SQL = "insert into items (created_date) values ('1111')";
+                try (PreparedStatement statement = connection.prepareStatement(SQL)) {
+                    if (statement.executeUpdate() > 1) {
+                        System.out.println(store);
+                    }
+                }
+                Thread.sleep(10000);
                 scheduler.shutdown();
-                System.out.println(store);
-            } catch (Exception se) {
-                se.printStackTrace();
+
+            } catch (SchedulerException | InterruptedException e) {
+                e.printStackTrace();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
