@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -22,10 +22,14 @@ public class AlertRabbit {
 
     private static Connection getConnection() throws Exception {
         Class.forName("org.postgresql.Driver");
-        String url = "jdbc:postgresql://localhost:5432/idea_db";
-        String login = "postgres";
-        String password = "password";
-        return DriverManager.getConnection(url, login, password);
+        try (InputStream inputStream = AlertRabbit.class.getClassLoader().getResourceAsStream("app.properties") ) {
+            Properties properties = new Properties();
+            properties.load(inputStream);
+            return DriverManager.getConnection(properties.getProperty("url"),
+                    properties.getProperty("login"),
+                    properties.getProperty("password")
+            );
+        }
     }
 
     public static void main(String[] args) throws Exception {
