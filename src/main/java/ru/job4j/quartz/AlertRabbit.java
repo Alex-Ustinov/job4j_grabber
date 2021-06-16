@@ -20,12 +20,14 @@ import static org.quartz.SimpleScheduleBuilder.*;
 
 public class AlertRabbit {
 
-    private static Connection getConnection() throws Exception {
+    static Connection connection;
+
+    AlertRabbit() throws Exception {
         Class.forName("org.postgresql.Driver");
-        try (InputStream inputStream = AlertRabbit.class.getClassLoader().getResourceAsStream("app.properties") ) {
+        try (InputStream inputStream = AlertRabbit.class.getClassLoader().getResourceAsStream("app.properties")) {
             Properties properties = new Properties();
             properties.load(inputStream);
-            return DriverManager.getConnection(properties.getProperty("url"),
+            connection = DriverManager.getConnection(properties.getProperty("url"),
                     properties.getProperty("login"),
                     properties.getProperty("password")
             );
@@ -34,8 +36,7 @@ public class AlertRabbit {
 
     public static void main(String[] args) throws Exception {
         Properties properties = new Properties();
-        try (FileInputStream file = new FileInputStream("./rabbit.properties");
-                Connection connection = getConnection()) {
+        try (FileInputStream file = new FileInputStream("./rabbit.properties")) {
                 properties.load(file);
             try {
                 List<Long> store = new ArrayList<>();
