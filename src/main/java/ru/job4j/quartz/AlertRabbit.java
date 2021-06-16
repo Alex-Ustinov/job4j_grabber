@@ -35,14 +35,14 @@ public class AlertRabbit {
     public static void main(String[] args) throws Exception {
         Properties properties = new Properties();
         try (FileInputStream file = new FileInputStream("./rabbit.properties");
-                     Connection connection = getConnection()
-        ) {
-            properties.load(file);
+                Connection connection = getConnection()) {
+                properties.load(file);
             try {
                 List<Long> store = new ArrayList<>();
                 Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
                 scheduler.start();
                 JobDataMap data = new JobDataMap();
+
                 data.put("store", connection);
                 JobDetail job = newJob(Rabbit.class)
                         .usingJobData(data)
@@ -64,9 +64,11 @@ public class AlertRabbit {
                 Thread.sleep(10000);
                 scheduler.shutdown();
 
-            } catch (SchedulerException | InterruptedException e) {
-                e.printStackTrace();
+            } catch (Exception se) {
+                se.printStackTrace();
             }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
