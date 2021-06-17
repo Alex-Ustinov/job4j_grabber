@@ -4,6 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import ru.job4j.grabber.utils.SqlRuDateTimeParser;
 
 public class SqlRuParse {
     public static void main(String[] args) throws Exception {
@@ -11,10 +12,11 @@ public class SqlRuParse {
         Elements row = doc.select(".postslisttopic");
         for (Element td : row) {
             Element href = td.child(0);
-            System.out.println(href.attr("href"));
-            System.out.println(href.text());
+            //System.out.println(href.attr("href"));
+            //System.out.println(href.text());
         }
         Elements rowDate = doc.select(".altCol");
+        SqlRuDateTimeParser sqlRuDateTimeParser = new SqlRuDateTimeParser();
         for (Element tds : rowDate) {
             if ("text-align:center".equals(tds.attr("style"))) {
                 System.out.println(tds.text());
