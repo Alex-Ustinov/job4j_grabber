@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="38793f78-b34e-4f31-9f15-2379821eccf5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/job4j/grabber/utils/DateTimeParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/job4j/grabber/utils/DateTimeParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/job4j/grabber/utils/SqlRuDateTimeParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/job4j/grabber/utils/SqlRuDateTimeParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/job4j/html/SqlRuParse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/job4j/html/SqlRuParse.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +44,7 @@
       <command value="mvn install" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.SqlRuDateTimeParser">
+  <component name="RunManager" selected="Application.SqlRuParse">
     <configuration name="SqlRuDateTimeParser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ru.job4j.grabber.utils.SqlRuDateTimeParser" />
       <module name="job4j_grabber" />
@@ -74,8 +73,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.SqlRuDateTimeParser" />
         <item itemvalue="Application.SqlRuParse" />
+        <item itemvalue="Application.SqlRuDateTimeParser" />
       </list>
     </recent_temporary>
   </component>
