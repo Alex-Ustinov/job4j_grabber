@@ -4,12 +4,9 @@ import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -22,22 +19,28 @@ public class AlertRabbit {
 
     static Connection connection;
 
+    static Properties readProperties() throws Exception {
+        Properties properties = new Properties();
+        try (FileInputStream fileInputStream = new FileInputStream("app.properties");
+            FileInputStream file = new FileInputStream("./rabbit.properties")) {
+            properties.load(fileInputStream);
+            properties.load(file);
+        }
+        return properties;
+    }
+
     AlertRabbit() throws Exception {
         Class.forName("org.postgresql.Driver");
-        try (InputStream inputStream = AlertRabbit.class.getClassLoader().getResourceAsStream("app.properties")) {
-            Properties properties = new Properties();
-            properties.load(inputStream);
+            Properties properties = readProperties();
             connection = DriverManager.getConnection(properties.getProperty("url"),
                     properties.getProperty("login"),
                     properties.getProperty("password")
             );
-        }
+
     }
 
     public static void main(String[] args) throws Exception {
-        Properties properties = new Properties();
-        try (FileInputStream file = new FileInputStream("./rabbit.properties")) {
-                properties.load(file);
+        Properties properties = readProperties();
             try {
                 List<Long> store = new ArrayList<>();
                 Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
@@ -68,9 +71,6 @@ public class AlertRabbit {
             } catch (Exception se) {
                 se.printStackTrace();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     public static class Rabbit implements Job {
