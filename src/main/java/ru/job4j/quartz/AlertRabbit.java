@@ -75,7 +75,7 @@ public class AlertRabbit {
         }
 
         @Override
-        public void execute(JobExecutionContext context) throws JobExecutionException, SQLException {
+        public void execute(JobExecutionContext context) throws JobExecutionException {
             System.out.println("Rabbit runs here ...");
             List<Long> store = (List<Long>) context.getJobDetail().getJobDataMap().get("store");
             String SQL = "insert into items (created_date) values ('1111')";
@@ -83,6 +83,8 @@ public class AlertRabbit {
                 if (statement.executeUpdate() > 1) {
                     System.out.println(store);
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
             store.add(System.currentTimeMillis());
         }
