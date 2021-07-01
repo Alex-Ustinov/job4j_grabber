@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -59,12 +60,6 @@ public class AlertRabbit {
                         .withSchedule(times)
                         .build();
                 scheduler.scheduleJob(job, trigger);
-                String SQL = "insert into items (created_date) values ('1111')";
-                try (PreparedStatement statement = connection.prepareStatement(SQL)) {
-                    if (statement.executeUpdate() > 1) {
-                        System.out.println(store);
-                    }
-                }
                 Thread.sleep(10000);
                 scheduler.shutdown();
 
@@ -80,9 +75,15 @@ public class AlertRabbit {
         }
 
         @Override
-        public void execute(JobExecutionContext context) throws JobExecutionException {
+        public void execute(JobExecutionContext context) throws JobExecutionException, SQLException {
             System.out.println("Rabbit runs here ...");
             List<Long> store = (List<Long>) context.getJobDetail().getJobDataMap().get("store");
+            String SQL = "insert into items (created_date) values ('1111')";
+            try (PreparedStatement statement = connection.prepareStatement(SQL)) {
+                if (statement.executeUpdate() > 1) {
+                    System.out.println(store);
+                }
+            }
             store.add(System.currentTimeMillis());
         }
     }
