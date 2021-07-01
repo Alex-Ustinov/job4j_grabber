@@ -28,12 +28,9 @@ public class ModelPost {
         Elements title = doc.select(".messageHeader");
         this.title = title.get(1).text();
 
-        Elements link = doc.select(".canonical");
+        Elements link = doc.getElementsByAttributeValue("rel", "canonical");
+        this.link = link.first().attr("href");
 
-
-        for (Element td : link) {
-            System.out.println(td.attr("href"));
-        }
     }
 
     public static void main(String[] args) throws IOException, ParseException {
