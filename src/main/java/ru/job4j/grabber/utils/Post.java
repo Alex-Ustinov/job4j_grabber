@@ -2,14 +2,13 @@ package ru.job4j.grabber.utils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 
-public class ModelPost {
+public class Post {
     private Integer id;
     private String title;
     private String link;
@@ -34,7 +33,7 @@ public class ModelPost {
     }
 
     public static void main(String[] args) throws IOException, ParseException {
-        ModelPost modelPost = new ModelPost();
+        Post modelPost = new Post();
         modelPost.getData("1325330/lidy-be-fe-senior-cistemnye-analitiki-qa-i-devops-moskva-do-200t");
     }
 }
