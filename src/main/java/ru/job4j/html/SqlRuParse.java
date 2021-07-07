@@ -38,7 +38,6 @@ public class SqlRuParse implements Parse {
 
     @Override
     public List<Post> list(String link) throws IOException, ParseException {
-        SqlRuParse sqlRuParse = new SqlRuParse();
         List<Post> postList = new ArrayList();
         Document doc = Jsoup.connect(link).get();
         Elements hrefs = doc.select(".sort_options");
@@ -47,7 +46,7 @@ public class SqlRuParse implements Parse {
             Elements links = doc.select(".postslisttopic");
             for (Element td : links) {
                 Element href = td.child(0);
-                Post post = sqlRuParse.detail(String.valueOf(href.attr("href")));
+                Post post = detail(String.valueOf(href.attr("href")));
                 postList.add(post);
             }
         }
