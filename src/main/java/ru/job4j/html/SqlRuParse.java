@@ -74,8 +74,7 @@ public class SqlRuParse implements Parse {
 
     @Override
     public Post detail(String link) throws IOException, ParseException {
-        Post post = new Post();
-        post.getData(link);
-        return post;
+        getData(link);
+        return new Post(this.title, this.link, this.description, this.created);
     }
 }
