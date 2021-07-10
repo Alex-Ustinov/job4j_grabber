@@ -16,11 +16,6 @@ import java.util.List;
 
 public class SqlRuParse implements Parse {
 
-    private String title;
-    private String link;
-    private String description;
-    private LocalDateTime created;
-
     public static void main(String[] args) throws Exception {
         SqlRuParse sqlRuParse = new SqlRuParse();
         sqlRuParse.list("https://www.sql.ru/forum/job-offers/707");
@@ -42,23 +37,6 @@ public class SqlRuParse implements Parse {
         }
     }
 
-    public void getData(String url) throws IOException, ParseException {
-        Document doc = Jsoup.connect("https://www.sql.ru/forum/"+url).get();
-        Elements description = doc.select(".msgBody");
-        this.description = description.get(1).text();
-
-        Elements created = doc.select(".msgFooter");
-        SqlRuDateTimeParser sqlRuDateTimeParser = new SqlRuDateTimeParser();
-        this.created = sqlRuDateTimeParser.parse(created.get(1).text());
-
-        Elements title = doc.select(".messageHeader");
-        this.title = title.get(1).text();
-
-        Elements link = doc.getElementsByAttributeValue("rel", "canonical");
-        this.link = link.first().attr("href");
-
-    }
-
     @Override
     public List<Post> list(String link) throws IOException, ParseException {
         List<Post> postList = new ArrayList();
@@ -73,8 +51,25 @@ public class SqlRuParse implements Parse {
     }
 
     @Override
-    public Post detail(String link) throws IOException, ParseException {
-        getData(link);
-        return new Post(this.title, this.link, this.description, this.created);
+    public Post detail(String url) throws IOException, ParseException {
+        String title;
+        String link;
+        String description;
+        LocalDateTime created;
+
+        Document doc = Jsoup.connect(url).get();
+        Elements descriptionApplication  = doc.select(".msgBody");
+        description = descriptionApplication.get(1).text();
+
+        Elements createdApplication = doc.select(".msgFooter");
+        SqlRuDateTimeParser sqlRuDateTimeParser = new SqlRuDateTimeParser();
+        created = sqlRuDateTimeParser.parse(createdApplication.get(1).text());
+
+        Elements titleApplication = doc.select(".messageHeader");
+        title = titleApplication.get(1).text();
+
+        Elements linkApplication = doc.getElementsByAttributeValue("rel", "canonical");
+        link = linkApplication.first().attr("href");
+        return new Post(title, link, description, created);
     }
 }
