@@ -72,11 +72,12 @@ public class PsqlStore implements Store, AutoCloseable {
                 ResultSet resultSet = statement.executeQuery()) {
             if (resultSet.next()) {
                 result = new Post();
+                Timestamp timestamp = new Timestamp(resultSet.getDate("created").getSeconds());
                 result.setId(resultSet.getInt("id"));
                 result.setTitle(resultSet.getString("title"));
                 result.setLink(resultSet.getString("link"));
                 result.setDescription(resultSet.getString("description"));
-                result.setCreated(convertToLocalDate(resultSet.getDate("create")));
+                result.setCreated(timestamp.toLocalDateTime());
             }
         } catch (Exception e) {
             e.printStackTrace();
