@@ -23,16 +23,6 @@ public class PsqlStore implements Store, AutoCloseable {
         cnn = DriverManager.getConnection(cfg.getProperty("url"), cfg.getProperty("login"), cfg.getProperty("password"));
     }
 
-    public Date convertToDate(LocalDateTime dateToConvert) {
-        return (Date) Date.from(dateToConvert.atZone(ZoneId.systemDefault()).toInstant());
-    }
-
-    public LocalDateTime convertToLocalDate(Date dateToConvert) {
-        return dateToConvert.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-    }
-
     @Override
     public void save(Post post) throws SQLException {
         try(PreparedStatement statement =
@@ -41,7 +31,7 @@ public class PsqlStore implements Store, AutoCloseable {
             statement.setString(1, post.getTitle());
             statement.setString(2, post.getDescription());
             statement.setString(3, post.getLink());
-            statement.setDate(4, convertToDate(post.getCreated()));
+            statement.setDate(4, new Date(Timestamp.valueOf(post.getCreated()).getTime()));
             statement.execute();
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 if (resultSet.next()) {
@@ -59,12 +49,13 @@ public class PsqlStore implements Store, AutoCloseable {
         try (PreparedStatement statement = cnn.prepareStatement("SELECT * FROM post");
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
+                Timestamp timestamp = new Timestamp(resultSet.getDate("created").getSeconds());
                 result.add(
                         new Post(resultSet.getInt("id"),
                             resultSet.getString("title"),
                             resultSet.getString("link"),
                             resultSet.getString("description"),
-                            convertToLocalDate(resultSet.getDate("created"))
+                                timestamp.toLocalDateTime()
                         )
                 );
             }
@@ -76,10 +67,11 @@ public class PsqlStore implements Store, AutoCloseable {
 
     @Override
     public Post findById(int id) {
-        Post result = new Post();
+        Post result = null;
         try (PreparedStatement statement = cnn.prepareStatement("SELECT * FROM post WHERE id = ?");
                 ResultSet resultSet = statement.executeQuery()) {
-            while(resultSet.next()) {
+            if (resultSet.next()) {
+                result = new Post();
                 result.setId(resultSet.getInt("id"));
                 result.setTitle(resultSet.getString("title"));
                 result.setLink(resultSet.getString("link"));
