@@ -1,11 +1,16 @@
 package ru.job4j.grabber;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import ru.job4j.grabber.utils.Post;
 import ru.job4j.html.SqlRuParse;
 
 import java.io.*;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.List;
 import java.util.Properties;
 
 import static org.quartz.JobBuilder.newJob;
@@ -53,10 +58,20 @@ public class Grabber implements Grab {
     public static class GrabJob implements Job {
 
         @Override
-        public void execute(JobExecutionContext context) throws JobExecutionException {
+        public void execute(JobExecutionContext context) {
             JobDataMap map = context.getJobDetail().getJobDataMap();
             Store store = (Store) map.get("store");
             Parse parse = (Parse) map.get("parse");
+            for (int i = 1; i <= 5; i++) {
+                String url = "https://www.sql.ru/forum/job-offers/"+i;
+                try (List<Post> postList = parse.list(url)) {
+                    for (Post post : postList) {
+                        store.save(post);
+                    }
+                } catch (IOException | SQLException | ParseException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
