@@ -31,7 +31,7 @@ public class PsqlStore implements Store, AutoCloseable {
             statement.setString(1, post.getTitle());
             statement.setString(2, post.getDescription());
             statement.setString(3, post.getLink());
-            statement.setDate(4, new Date(Timestamp.valueOf(post.getCreated()).getTime()));
+            statement.setTimestamp(4, Timestamp.valueOf(post.getCreated()));
             statement.execute();
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 if (resultSet.next()) {
@@ -49,13 +49,12 @@ public class PsqlStore implements Store, AutoCloseable {
         try (PreparedStatement statement = cnn.prepareStatement("SELECT * FROM post");
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
-                //Timestamp timestamp = new Timestamp(resultSet.getDate("created").getSeconds());
                 result.add(
                         new Post(resultSet.getInt("id"),
                             resultSet.getString("title"),
                             resultSet.getString("link"),
                             resultSet.getString("description"),
-                                timestamp.toLocalDateTime()
+                                resultSet.getTimestamp("created").toLocalDateTime()
                         )
                 );
             }
@@ -72,12 +71,11 @@ public class PsqlStore implements Store, AutoCloseable {
                 ResultSet resultSet = statement.executeQuery()) {
             if (resultSet.next()) {
                 result = new Post();
-                //Timestamp timestamp = new Timestamp(resultSet.getDate("created").getSeconds());
                 result.setId(resultSet.getInt("id"));
                 result.setTitle(resultSet.getString("title"));
                 result.setLink(resultSet.getString("link"));
                 result.setDescription(resultSet.getString("description"));
-                result.setCreated(timestamp.toLocalDateTime());
+                result.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
             }
         } catch (Exception e) {
             e.printStackTrace();
