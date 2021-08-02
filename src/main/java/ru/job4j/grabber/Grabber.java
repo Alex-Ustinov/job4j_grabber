@@ -89,7 +89,8 @@ public class Grabber implements Grab {
             Parse parse = (Parse) map.get("parse");
             for (int i = 1; i <= 5; i++) {
                 String url = "https://www.sql.ru/forum/job-offers/"+i;
-                try (List<Post> postList = parse.list(url)) {
+                try {
+                    List<Post> postList = parse.list(url);
                     for (Post post : postList) {
                         store.save(post);
                     }
