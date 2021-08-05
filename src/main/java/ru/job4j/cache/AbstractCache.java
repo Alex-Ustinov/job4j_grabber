@@ -21,6 +21,6 @@ public abstract class AbstractCache<K, V> {
         return null;
     }
 
-    protected abstract V load(K key) throws FileNotFoundException;
+    protected abstract V load(K key);
 
 }

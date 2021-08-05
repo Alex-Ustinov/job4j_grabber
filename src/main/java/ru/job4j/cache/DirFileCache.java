@@ -9,14 +9,23 @@ public class DirFileCache extends AbstractCache<String, String> {
 
     private final String cachingDir;
 
+    protected final Map<String, SoftReference<String>> cache = new HashMap<>();
+
     @Override
     public String get(String key) {
-        return super.get(key);
+        String rsl = "";
+        String fileWay = cachingDir+""+key;
+        if (!cache.containsKey(fileWay)){
+            rsl = load(fileWay);
+        } else {
+            rsl = cache.get(fileWay).get();
+        }
+        return rsl;
     }
 
     @Override
     public void put(String key, String value) {
-        super.put(key, value);
+        cache.put(key, new SoftReference<>(value));
     }
 
     public DirFileCache(String cachingDir) {
@@ -25,21 +34,16 @@ public class DirFileCache extends AbstractCache<String, String> {
 
     @Override
     protected String load(String key) {
-        String fileWay = cachingDir+""+key;
         String rsl = null;
-        if (get(fileWay).equals(null)) {
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(fileWay)))) {
-                StringBuilder stringBuilder = new StringBuilder();
-                for (String line = in.readLine(); line != null; line = in.readLine()) {
-                    stringBuilder.append(line);
-                }
-                rsl = stringBuilder.toString();
-                put(fileWay, rsl);
-            } catch (Exception e) {
-
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(key)))) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String line = in.readLine(); line != null; line = in.readLine()) {
+                stringBuilder.append(line);
             }
-        } else {
-            rsl = get(key);
+            rsl = stringBuilder.toString();
+            put(key, rsl);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return rsl;
     }
