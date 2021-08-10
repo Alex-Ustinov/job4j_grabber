@@ -1,6 +1,7 @@
 package ru.job4j.cache;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +17,9 @@ public abstract class AbstractCache<K, V> {
 
     public V get(K key) {
         if (!cache.containsKey(key)) {
-            return (V) cache.get(key);
+            return load(key);
+        } else {
+            cache.get(key);
         }
         return null;
     }
