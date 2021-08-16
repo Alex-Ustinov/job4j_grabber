@@ -15,14 +15,12 @@ public class DirFileCache extends AbstractCache<String, String> {
 
     @Override
     protected String load(String key) {
-        String rsl = null;
         try {
             Path filePath = Paths.get(cachingDir, key);
-            rsl = Files.readString(filePath);
-            super.put(key, rsl);
+            return Files.readString(filePath);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return rsl;
+        return null;
     }
 }
