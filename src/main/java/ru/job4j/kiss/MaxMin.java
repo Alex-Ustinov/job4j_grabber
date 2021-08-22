@@ -19,9 +19,13 @@ public class MaxMin {
     public <T> T setInitialValue (List<T> value) {
         return value.size() != 0 ? value.get(0) : null;
     }
+    public <T> T setInitialValuePredicate (List<T> value) {
+        Predicate<List> predicate = (list) -> list.size() != 0;
+        return predicate.test(value) ? value.get(0) : null;
+    }
 
     public <T> T max(List<T> value, Comparator<T> comparator) {
-        T result = setInitialValue(value);
+        T result = setInitialValuePredicate(value);
         if (!result.equals(null)) {
             for (int i = 1; i < value.size(); i++) {
                 if (customCompare(result, value.get(i), comparator, "max")) {
@@ -33,7 +37,7 @@ public class MaxMin {
     }
 
     public <T> T min(List<T> value, Comparator<T> comparator) {
-        T result = setInitialValue(value);
+        T result = setInitialValuePredicate(value);
         if (!result.equals(null)) {
             for (int i = 1; i < value.size(); i++) {
                 if (customCompare(result, value.get(i), comparator, "min")) {
