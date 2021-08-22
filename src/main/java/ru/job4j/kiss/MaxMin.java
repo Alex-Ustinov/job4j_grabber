@@ -2,6 +2,8 @@ package ru.job4j.kiss;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 public class MaxMin {
 
@@ -42,11 +44,11 @@ public class MaxMin {
         return result;
     }
 
-    public <T> T myOwnMaxMin(List<T> value, Comparator<T> comparator, String rate) {
+    public <T> T myOwnMaxMin(List<T> value, BiPredicate biPredicate) {
         T result = setInitialValue(value);
         if (!result.equals(null)) {
             for (int i = 1; i < value.size(); i++) {
-                if (customCompare(result, value.get(i), comparator, rate)) {
+                if (biPredicate.test(value.get(i), result)) {
                     result = value.get(i);
                 }
             }
