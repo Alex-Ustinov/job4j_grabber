@@ -18,12 +18,12 @@ public class CustomGenerator implements Generator {
             if (keys.contains(entry.getKey())) {
                 result = setTemplate(result, entry.getKey(), entry.getValue());
             } else {
-                throw new Exception("Map does not have key for replacement");
+                throw new Exception("Template does not have key");
             }
         }
         for (int i = 0; i < keys.size(); i++) {
             if (!args.containsKey(keys.get(i))) {
-                throw new Exception("Template does not have key");
+                throw new Exception("Map does not have key for replacement");
             }
         }
         return result;
