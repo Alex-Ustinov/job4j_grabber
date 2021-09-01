@@ -17,12 +17,13 @@ public class MaxMin {
     }
 
     private <T> T minMax(List<T> value, Predicate<Integer> predicate, Comparator<T> comparator) {
-        T result = value.size() != 0 ? value.get(0) : null;
-        if (!result.equals(null)) {
-            for (int i = 1; i < value.size(); i++) {
-                if (predicate.test(comparator.compare(value.get(i), result))) {
-                    result = value.get(i);
-                }
+        if (value.size() == 0) {
+            return null;
+        }
+        T result = value.get(0);
+        for (int i = 1; i < value.size(); i++) {
+            if (predicate.test(comparator.compare(value.get(i), result))) {
+                result = value.get(i);
             }
         }
         return result;
