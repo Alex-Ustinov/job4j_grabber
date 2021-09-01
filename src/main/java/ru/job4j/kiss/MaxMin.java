@@ -21,9 +21,9 @@ public class MaxMin {
             return null;
         }
         T result = value.get(0);
-        for (int i = 1; i < value.size(); i++) {
-            if (predicate.test(comparator.compare(value.get(i), result))) {
-                result = value.get(i);
+        for (T item : value) {
+            if (predicate.test(comparator.compare(item, result))) {
+                result = item;
             }
         }
         return result;
