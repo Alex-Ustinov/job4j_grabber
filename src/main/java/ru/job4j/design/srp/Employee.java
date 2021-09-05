@@ -1,9 +1,10 @@
 package ru.job4j.design.srp;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Objects;
 
-public class Employee {
+public class Employee implements Serializable {
     private String name;
     private Calendar hired;
     private Calendar fired;
@@ -14,6 +15,16 @@ public class Employee {
         this.hired = hired;
         this.fired = fired;
         this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{"
+                + "name=" + name
+                + ", hired=" + hired
+                + ", fired='" + fired
+                + ", salary=" + salary
+                + '}';
     }
 
     public String getName() {
