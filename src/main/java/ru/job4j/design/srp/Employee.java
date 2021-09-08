@@ -22,7 +22,7 @@ public class Employee implements Serializable {
         return "Employee{"
                 + "name=" + name
                 + ", hired=" + hired
-                + ", fired='" + fired
+                + ", fired=" + fired
                 + ", salary=" + salary
                 + '}';
     }

@@ -16,7 +16,7 @@ public class HrReport implements Report {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Name; Salary");
         List<Employee> employees = store.findBy(filter);
-        employees.sort(Comparator.comparing(Employee::getSalary));
+        employees.sort(Comparator.comparing(Employee::getSalary).reversed());
         for (Employee employee : employees) {
             stringBuilder.append(System.lineSeparator());
             stringBuilder.append(employee.getName()).append(";");

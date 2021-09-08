@@ -14,7 +14,6 @@ public class JsonReportEngine implements Report {
         this.store = store;
     }
 
-    @Override
     public String generate(Predicate<Employee> filter) throws Exception {
         List<Employee> employees =  store.findBy(filter);
         Gson lib = new GsonBuilder().create();
