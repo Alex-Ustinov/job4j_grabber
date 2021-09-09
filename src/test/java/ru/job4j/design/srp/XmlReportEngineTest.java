@@ -11,13 +11,12 @@ public class XmlReportEngineTest {
 
     @Test
     public void generate() throws Exception {
-        MemStore store = new MemStore();
-        Calendar now = Calendar.getInstance();
-        Employee worker = new Employee("Ivan", now, now, 100);
+        CustomUserStore store = new CustomUserStore();
+        User worker = new User("Ivan", "Ivanov");
         store.add(worker);
-        Report engine = new XmlReportEngine(store);
+        UserReport engine = new XmlReportEngine(store);
 ;
-        assertThat(engine.generate(em -> true), is(""));
+        assertThat(engine.generate(em -> true), is("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<users>\n    <users/>\n</users>\n"));
     }
 
 }

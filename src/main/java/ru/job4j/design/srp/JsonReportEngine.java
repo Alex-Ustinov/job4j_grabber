@@ -6,16 +6,16 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class JsonReportEngine implements Report {
+public class JsonReportEngine implements UserReport {
 
-    private Store store;
+    private UserStore store;
 
-    public JsonReportEngine(Store store) {
+    public JsonReportEngine(UserStore store) {
         this.store = store;
     }
 
-    public String generate(Predicate<Employee> filter) throws Exception {
-        List<Employee> employees =  store.findBy(filter);
+    public String generate(Predicate<User> filter) throws Exception {
+        List<User> employees =  store.findBy(filter);
         Gson lib = new GsonBuilder().create();
         String report = lib.toJson(employees);
         System.out.println(report);

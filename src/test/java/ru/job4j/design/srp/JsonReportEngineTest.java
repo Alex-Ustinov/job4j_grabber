@@ -10,18 +10,17 @@ import static org.junit.Assert.assertThat;
 public class JsonReportEngineTest {
     @Test
     public void generate() throws Exception {
-        MemStore store = new MemStore();
-        Calendar now = Calendar.getInstance();
-        Employee worker = new Employee("Ivan", now, now, 100);
+        CustomUserStore store = new CustomUserStore();
+        User worker = new User("Ivan", "Ivanov");
         store.add(worker);
-        Report engine = new JsonReportEngine(store);
+        UserReport engine = new JsonReportEngine(store);
         StringBuilder expect = new StringBuilder()
-                .append("Employee{")
-                .append("name").append(worker.getName())
-                .append(", hired=").append(worker.getHired())
-                .append(", fired=").append(worker.getFired())
-                .append(", salary=").append(worker.getSalary())
-                .append("}");
+                .append("[{")
+                .append("\"name\":\"").append(worker.getName()).append("\"")
+                .append(",\"lastName\":\"").append(worker.getLastName()).append("\"")
+                .append("}]");
         assertThat(engine.generate(em -> true), is(expect.toString()));
     }
+
+    //[{\"name\":\"Ivan\",\"lastName\":\"Ivanov\"}]
 }
