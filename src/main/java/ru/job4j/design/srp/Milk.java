@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Milk extends Food {
 
-    Milk(String name, Date createDate, Date expiryDate, Double price, Integer discount) {
+    Milk(String name, Date createDate, Date expiryDate, Double price, Double discount) {
         super(name, createDate, expiryDate, price, discount);
     }
 }

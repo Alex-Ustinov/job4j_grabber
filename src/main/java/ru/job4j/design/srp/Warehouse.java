@@ -36,9 +36,7 @@ public class Warehouse implements Storage {
     @Override
     public boolean checkProduct(Food product) {
         long percentExpire = rateExpire(product);
-        if (percentExpire < 0) {
-            return false;
-        } else if (percentExpire >= 25) {
+        if (percentExpire < 0 || percentExpire < 25) {
             return false;
         }
         return true;

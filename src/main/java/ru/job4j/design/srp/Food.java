@@ -8,9 +8,9 @@ public class Food {
     private Date expiryDate;
     private Date createDate;
     private Double price;
-    private Integer discount;
+    private Double discount;
 
-    Food(String name, Date createDate, Date expiryDate, Double price, Integer discount) {
+    Food(String name, Date createDate, Date expiryDate, Double price, Double discount) {
         this.name = name;
         this.createDate = createDate;
         this.expiryDate = expiryDate;
@@ -38,7 +38,11 @@ public class Food {
         return price;
     }
 
-    public Integer getDiscount() {
+    public Double getDiscount() {
         return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
     }
 }

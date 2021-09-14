@@ -22,7 +22,8 @@ public class Shop implements Storage {
     }
 
     public void setDiscount(Food product) {
-        product.setPrice(product.getDiscount() * product.getPrice());
+        product.setDiscount(50.0);
+        product.setPrice((product.getDiscount() / 100) * product.getPrice());
     }
 
     public long rateExpire(Food product){
