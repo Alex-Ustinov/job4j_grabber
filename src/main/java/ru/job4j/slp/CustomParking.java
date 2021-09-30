@@ -32,11 +32,6 @@ public class CustomParking implements Parking {
         this.amountTruck = amountTruck;
     }
 
-    @Override
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
     public void setVehicles(Vehicle vehicle) {
         this.vehicles.add(vehicle);
     }
