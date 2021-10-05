@@ -3,7 +3,7 @@ package ru.job4j.slp;
 import java.util.List;
 
 public interface Parking {
-    void parkingVehicle(List<Vehicle> vehicles);
+    boolean parkingVehicle(Vehicle vehicle);
     int getAmountCar();
     int getAmountTruck();
     String report();

@@ -53,16 +53,14 @@ public class CustomParking implements Parking {
     }
 
     @Override
-    public void parkingVehicle(List<Vehicle> vehicles) {
-        for (Vehicle vehicle : vehicles) {
-            if (getFreePlace() > vehicle.getPlace()) {
-                setVehicles(vehicle);
-                setFreePlace(getFreePlace() - vehicle.getPlace());
-                establishParkingData(vehicle);
-            } else {
-                throw new IllegalArgumentException("Parking does not have enough place");
-            }
+    public boolean parkingVehicle(Vehicle vehicle) {
+        if (getFreePlace() > vehicle.getPlace()) {
+            setVehicles(vehicle);
+            setFreePlace(getFreePlace() - vehicle.getPlace());
+            establishParkingData(vehicle);
+            return true;
         }
+        return false;
     }
 
     @Override

@@ -27,8 +27,7 @@ public class CustomParkingTest {
         ));
 
         Parking customParking = new CustomParking(20);
-        customParking.parkingVehicle(vehicles);
-
+        vehicles.forEach(vehicle -> customParking.parkingVehicle(vehicle));
         assertThat(customParking.getAmountCar(), is(5));
         assertThat(customParking.getAmountTruck(), is(5));
     }
@@ -50,7 +49,7 @@ public class CustomParkingTest {
         ));
 
         Parking customParking = new CustomParking(20);
-        customParking.parkingVehicle(vehicles);
+        vehicles.forEach(vehicle -> customParking.parkingVehicle(vehicle));
 
         assertThat(customParking.report(), is(
                 "Amount of trucks is = 5 Amount of cars is = 5 Capacity of parking for car is 1 Capacity of parking has at list place for 0 trucks Parking is not full"));
