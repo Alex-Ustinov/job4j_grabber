@@ -26,7 +26,7 @@ public class CustomParkingTest {
                 car, car2, truck, truck2, car3, car4, truck3, truck4, truck5, car5
         ));
 
-        Parking customParking = new CustomParking(20);
+        Parking customParking = new CustomParking(10, 10);
         vehicles.forEach(vehicle -> customParking.parkingVehicle(vehicle));
         assertThat(customParking.getAmountCar(), is(5));
         assertThat(customParking.getAmountTruck(), is(5));
@@ -48,7 +48,7 @@ public class CustomParkingTest {
                 car, car2, truck, truck2, car3, car4, truck3, truck4, truck5, car5
         ));
 
-        Parking customParking = new CustomParking(20);
+        Parking customParking = new CustomParking(10, 10);
         vehicles.forEach(vehicle -> customParking.parkingVehicle(vehicle));
 
         assertThat(customParking.report(), is(

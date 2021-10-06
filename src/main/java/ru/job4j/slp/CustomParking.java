@@ -5,15 +5,21 @@ import java.util.List;
 
 public class CustomParking implements Parking {
 
-    private int capacity;
+    private int carCapacity;
+    private int truckCapacity;
     private int freePlace;
+    private int freePlaceTruck;
+    private int freePlaceCar;
     private List<Vehicle> vehicles = new ArrayList<>();
     private int amountCar = 0;
     private int amountTruck = 0;
 
-    CustomParking(int capacity) {
-        this.capacity = capacity;
-        this.freePlace = capacity;
+    CustomParking(int carCapacity, int truckCapacity) {
+        this.carCapacity = carCapacity;
+        this.truckCapacity = truckCapacity;
+        this.freePlace = carCapacity + truckCapacity;
+        this.freePlaceTruck = truckCapacity;
+        this.freePlaceCar = carCapacity;
     }
 
     public int getAmountCar() {
@@ -52,9 +58,37 @@ public class CustomParking implements Parking {
         }
     }
 
+    public void setFreePlaceTruck(int freePlaceTruck) {
+        this.freePlaceTruck = freePlaceTruck;
+    }
+
+    public int getFreePlaceTruck() {
+        return freePlaceTruck;
+    }
+
+    public void setFreePlaceCar(int freePlaceCar) {
+        this.freePlaceCar = freePlaceCar;
+    }
+
+    public int getFreePlaceCar() {
+        return freePlaceCar;
+    }
+
     @Override
     public boolean parkingVehicle(Vehicle vehicle) {
-        if (getFreePlace() > vehicle.getPlace()) {
+        if (vehicle.getPlace() == 1 && getAmountCar() + 1 <= carCapacity) {
+            setVehicles(vehicle);
+            setFreePlace(getFreePlace() - 1);
+            setFreePlaceCar(getFreePlaceCar() - 1);
+            establishParkingData(vehicle);
+        } else if (getFreePlace() - vehicle.getPlace() >= 0) {
+            if (getFreePlaceTruck() + vehicle.getPlace() >= 0) {
+                setFreePlaceTruck(getFreePlaceTruck() - vehicle.getPlace());
+            } else {
+                int takePlaceFromCarParking = getFreePlaceCar() - vehicle.getPlace() > 0 ? getFreePlaceCar() - vehicle.getPlace() : 0;
+                setFreePlaceCar(takePlaceFromCarParking);
+                setFreePlaceTruck(getFreePlaceTruck() - Math.abs((getFreePlaceCar() - vehicle.getPlace())));
+            }
             setVehicles(vehicle);
             setFreePlace(getFreePlace() - vehicle.getPlace());
             establishParkingData(vehicle);
@@ -65,7 +99,7 @@ public class CustomParking implements Parking {
 
     @Override
     public String report() {
-        if (capacity == freePlace && freePlace != 0) {
+        if (carCapacity + truckCapacity == freePlace && freePlace != 0) {
             throw new IllegalArgumentException("Parking is empty");
         };
         StringBuilder report = new StringBuilder();
