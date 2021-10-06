@@ -5,12 +5,12 @@ import java.util.List;
 
 public class CustomParking implements Parking {
 
-    private int carCapacity;
-    private int truckCapacity;
+    private final int carCapacity;
+    private final int truckCapacity;
     private int freePlace;
     private int freePlaceTruck;
     private int freePlaceCar;
-    private List<Vehicle> vehicles = new ArrayList<>();
+    private final List<Vehicle> vehicles = new ArrayList<>();
     private int amountCar = 0;
     private int amountTruck = 0;
 
@@ -85,8 +85,7 @@ public class CustomParking implements Parking {
             if (getFreePlaceTruck() + vehicle.getPlace() >= 0) {
                 setFreePlaceTruck(getFreePlaceTruck() - vehicle.getPlace());
             } else {
-                int takePlaceFromCarParking = getFreePlaceCar() - vehicle.getPlace() > 0 ? getFreePlaceCar() - vehicle.getPlace() : 0;
-                setFreePlaceCar(takePlaceFromCarParking);
+                setFreePlaceCar(Math.max(0, getFreePlaceCar() - vehicle.getPlace()));
                 setFreePlaceTruck(getFreePlaceTruck() - Math.abs((getFreePlaceCar() - vehicle.getPlace())));
             }
             setVehicles(vehicle);
@@ -101,7 +100,7 @@ public class CustomParking implements Parking {
     public String report() {
         if (carCapacity + truckCapacity == freePlace && freePlace != 0) {
             throw new IllegalArgumentException("Parking is empty");
-        };
+        }
         StringBuilder report = new StringBuilder();
         report.append("Amount of trucks is = ").append(this.getAmountTruck())
                 .append(" Amount of cars is = ").append(this.getAmountCar())
