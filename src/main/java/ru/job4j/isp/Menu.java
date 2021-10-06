@@ -4,25 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
-    private StringBuilder menu;
     private List<String> menuItem = new ArrayList<>();
-    private String dash = "";
-
-    public void setMenu(StringBuilder menu) {
-        this.menu = menu;
-    }
-
-    public StringBuilder getMenu() {
-        return menu;
-    }
-
-    public String getDash() {
-        return dash;
-    }
-
-    public void setDash(String dash) {
-        this.dash = dash;
-    }
 
     public List<String> getMenuItem() {
         return menuItem;
@@ -32,24 +14,28 @@ public class Menu {
         this.menuItem.add(menuItem);
     }
 
-    public void create (MenuItem item) {
-        setMenuItem(getDash() + " " + item.getName());
-        setDash(getDash() + "-");
-        System.out.println(item.getName() + " = " + this.getDash());
-        System.out.println("getSubItems size " + item.getSubItems().size());
+    public void create (MenuItem item, String dash) {
+        setMenuItem(dash + " " + item.getName());
         if (item.getSubItems().size() > 0) {
-            while (item.getSubItems().size() > 0) {
-                create(item.getSubItems().iterator().next());
+            for (MenuItem subItem : item.getSubItems()) {
+                create(subItem, dash + "-");
             }
-        } else {
-            setDash("");
         }
     }
 
     public static void main(String[] args) {
+        MenuItem item8 =  new MenuItem("Задача 2.1");
+        List subMenuItem4 = new ArrayList();
+        subMenuItem4.add(item8);
+        MenuItem item7 =  new MenuItem("Задача 2", subMenuItem4);
+        MenuItem item6 =  new MenuItem("Задача 1.1.1.1");
+        List subMenuItem3 = new ArrayList();
+        subMenuItem3.add(item6);
+        MenuItem item5 =  new MenuItem("Задача 1.1.1", subMenuItem3);
         MenuItem item3 =  new MenuItem("Задача 1.1.2");
         MenuItem item4 =  new MenuItem("Задача 1.2");
         List subMenuItem2 = new ArrayList();
+        subMenuItem2.add(item5);
         subMenuItem2.add(item3);
         MenuItem item2 =  new MenuItem("Задача 1.1", subMenuItem2);
         List subMenuItem1 = new ArrayList();
@@ -58,11 +44,9 @@ public class Menu {
         MenuItem item1 =  new MenuItem("Задача 1", subMenuItem1);
         List <MenuItem> menuItems = new ArrayList<>();
         menuItems.add(item1);
-        menuItems.add(item2);
-        menuItems.add(item3);
-        menuItems.add(item4);
+        menuItems.add(item7);
         Menu menu = new Menu();
-        menuItems.forEach(item -> menu.create(item));
+        menuItems.forEach(item -> menu.create(item, ""));
         for(String item : menu.getMenuItem()) {
             System.out.println(item);
         }
