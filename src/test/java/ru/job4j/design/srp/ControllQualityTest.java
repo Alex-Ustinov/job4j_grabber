@@ -35,9 +35,8 @@ public class ControllQualityTest {
         Storage warehouse = new Warehouse();
         Storage shop = new Shop();
         Storage trash = new Trash();
-        ControllQuality controllQuality = new ControllQuality(
-                new ArrayList<>(List.of(warehouse, shop, trash))
-        );
+        StoragesStore storageStore = new CustomStorageStore(new ArrayList<>(List.of(warehouse, shop, trash)));
+        ControllQuality controllQuality = new ControllQuality(storageStore);
         controllQuality.sortProducts(products);
 
         assertThat(warehouse.getProducts().size(), is(4));

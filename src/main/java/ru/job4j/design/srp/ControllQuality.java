@@ -1,27 +1,25 @@
 package ru.job4j.design.srp;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ControllQuality {
 
-    private List<Storage> storages;
+    private StoragesStore storages;
 
-    ControllQuality (List<Storage> storages) {
+    ControllQuality (StoragesStore storages) {
         this.storages = storages;
-    }
-
-    public List<Storage> getStorages() {
-        return storages;
     }
 
     public void sortProducts (List<Food> products) {
         for (Food product : products) {
-            for (Storage storage : storages) {
+            for (Storage storage : storages.getStorages()) {
                 storage.addProduct(product);
             }
+        }
+    }
+    public void resort() {
+        for (Storage storage : storages.getStorages()) {
+            sortProducts(storage.getProducts());
         }
     }
 }
