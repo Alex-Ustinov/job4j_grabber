@@ -22,5 +22,4 @@ public class JsonReportEngineTest {
         assertThat(engine.generate(em -> true), is(expect.toString()));
     }
 
-    //[{\"name\":\"Ivan\",\"lastName\":\"Ivanov\"}]
 }
