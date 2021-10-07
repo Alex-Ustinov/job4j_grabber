@@ -81,6 +81,7 @@ public class CustomParking implements Parking {
             setFreePlace(getFreePlace() - 1);
             setFreePlaceCar(getFreePlaceCar() - 1);
             establishParkingData(vehicle);
+            return true;
         } else if (getFreePlace() - vehicle.getPlace() >= 0) {
             if (getFreePlaceTruck() + vehicle.getPlace() >= 0) {
                 setFreePlaceTruck(getFreePlaceTruck() - vehicle.getPlace());
