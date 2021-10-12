@@ -1,0 +1,7 @@
+<configuration>
+  <changeLogFile>src/main/resources/changelog.xml</changeLogFile>
+  <driver>com.mysql.jdbc.Driver</driver>
+  <url>jdbc:postgresql://127.0.0.1:5432/tracker</url>
+  <username>tracker</username>
+  <password>password</password>
+</configuration>
