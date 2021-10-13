@@ -20,6 +20,7 @@ public class Warehouse implements Storage {
             products.add(product);
         }
         return checkResult;
+
     }
 
     public long rateExpire(Food product){
@@ -39,6 +40,7 @@ public class Warehouse implements Storage {
         if (percentExpire < 0 || percentExpire < 25) {
             return false;
         }
+        System.out.println(product.getName()+ " " + percentExpire);
         return true;
     }
 }

@@ -39,8 +39,11 @@ public class ControllQualityTest {
         ControllQuality controllQuality = new ControllQuality(storageStore);
         controllQuality.sortProducts(products);
 
-        assertThat(warehouse.getProducts().size(), is(4));
-        assertThat(whiteBread.getPrice(), is(30.0));
-        assertThat(whiteBread.getDiscount(), is(50.0));
+        assertThat(warehouse.getProducts().size(), is(3));
+        assertThat(warehouse.getProducts().get(0).getName(), is("red apple"));
+        assertThat(warehouse.getProducts().get(1).getName(), is("super apple"));
+        assertThat(warehouse.getProducts().get(2).getName(), is("milk3"));
+        assertThat(whiteBread.getPrice(), is(60.0));
+        assertThat(whiteBread.getDiscount(), is(0.0));
     }
 }
