@@ -35,7 +35,7 @@ public class ControllQualityTest {
         Storage warehouse = new Warehouse();
         Storage shop = new Shop();
         Storage trash = new Trash();
-        StoragesStore storageStore = new CustomStorageStore(new ArrayList<>(List.of(warehouse, shop, trash)));
+        List storageStore = new ArrayList<>(List.of(warehouse, shop, trash));
         ControllQuality controllQuality = new ControllQuality(storageStore);
         controllQuality.sortProducts(products);
 
