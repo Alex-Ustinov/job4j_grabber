@@ -16,7 +16,7 @@ public class CustomMenu implements Menu, PrintMenu {
 
     @Override
     public void create (MenuItem item, String dash) {
-        setMenuItem(dash + " " + item.getName());
+        setMenuItem(item.getMenuItemStructure(dash));
         if (item.getSubItems().size() > 0) {
             for (MenuItem subItem : item.getSubItems()) {
                 create(subItem, dash + "-");
