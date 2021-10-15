@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MenuItem {
     private String name;
-    private ArrayList<MenuItem> subItems = new ArrayList<>();
+    private List<MenuItem> subItems = new ArrayList<>();
 
     MenuItem(String name, List<MenuItem> subItems) {
         subItems.forEach(item -> this.subItems.add(item));
@@ -20,7 +20,7 @@ public class MenuItem {
         return name;
     }
 
-    public ArrayList<MenuItem> getSubItems() {
+    public List<MenuItem> getSubItems() {
         return subItems;
     }
 }

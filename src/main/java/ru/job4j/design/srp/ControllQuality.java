@@ -2,6 +2,7 @@ package ru.job4j.design.srp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ControllQuality {
 
@@ -24,10 +25,8 @@ public class ControllQuality {
     }
 
     public void resort() {
-        List<Storage> copy = new ArrayList<>(storages);
+        List<Food> allFood = storages.stream().flatMap(storage -> storage.getProducts().stream()).collect(Collectors.toList());
         storages.clear();
-        for (Storage storage : copy) {
-            sortProducts(storage.getProducts());
-        }
+        sortProducts(allFood);
     }
 }
