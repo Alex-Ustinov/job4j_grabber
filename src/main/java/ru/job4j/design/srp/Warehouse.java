@@ -22,7 +22,7 @@ public class Warehouse implements Storage {
         return checkResult;
 
     }
-
+    @Override
     public long rateExpire(Food product){
         long now = new Date().getTime();
         long difference = product.getExpiryDate().getTime() - product.getCreateDate().getTime();

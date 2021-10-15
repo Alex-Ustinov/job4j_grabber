@@ -7,4 +7,5 @@ public interface Storage {
     List<Food> getProducts();
     boolean checkProduct(Food product);
     boolean addProduct(Food product);
+    long rateExpire(Food product);
 }

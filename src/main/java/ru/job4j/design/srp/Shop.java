@@ -25,7 +25,7 @@ public class Shop implements Storage {
         product.setDiscount(50.0);
         product.setPrice((product.getDiscount() / 100) * product.getPrice());
     }
-
+    @Override
     public long rateExpire(Food product){
         long now = new Date().getTime();
         long difference = product.getExpiryDate().getTime() - product.getCreateDate().getTime();
