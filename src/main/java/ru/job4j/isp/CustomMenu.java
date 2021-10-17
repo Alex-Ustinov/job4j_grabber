@@ -64,6 +64,5 @@ public class CustomMenu implements Menu, PrintMenu {
         menuItems.forEach(item -> menu.create(item, ""));
         String view = menu.createViewMenu(menu.getMenuItem());
         menu.print(view);
-
     }
 }

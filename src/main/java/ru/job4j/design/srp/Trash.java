@@ -22,11 +22,6 @@ public class Trash implements Storage {
     }
 
     @Override
-    public long rateExpire(Food product) {
-        return 0;
-    }
-
-    @Override
     public boolean checkProduct(Food product) {
         long now = new Date().getTime();
         long leftTime = product.getExpiryDate().getTime() - now;

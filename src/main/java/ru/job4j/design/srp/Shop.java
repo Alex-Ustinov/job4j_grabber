@@ -25,21 +25,10 @@ public class Shop implements Storage {
         product.setDiscount(50.0);
         product.setPrice((product.getDiscount() / 100) * product.getPrice());
     }
-    @Override
-    public long rateExpire(Food product){
-        long now = new Date().getTime();
-        long difference = product.getExpiryDate().getTime() - product.getCreateDate().getTime();
-        long leftTime = product.getExpiryDate().getTime() - now;
-        if (leftTime < 0) {
-            return -1;
-        }
-        long pastTime = now - product.getCreateDate().getTime();
-        return pastTime * 100 / difference;
-    }
 
     @Override
     public boolean checkProduct(Food product) {
-        long percentExpire = rateExpire(product);
+        long percentExpire =  rateExpire(product);
         if (percentExpire < 0) {
             return false;
         } else if (percentExpire >= 25 && percentExpire < 75) {
