@@ -26,7 +26,7 @@ public class ControllQuality {
 
     public void resort() {
         List<Food> allFood = storages.stream().flatMap(storage -> storage.getProducts().stream()).collect(Collectors.toList());
-        storages.clear();
+        storages.forEach(storage -> storage.getProducts().clear());
         sortProducts(allFood);
     }
 }
