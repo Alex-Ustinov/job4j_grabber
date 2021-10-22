@@ -5,6 +5,5 @@ public class WorkWithDb {
     private PostgresConnect postgresConnect;
 
     public void getData() {
-        //We should know with which kind of db we work
     }
 }
